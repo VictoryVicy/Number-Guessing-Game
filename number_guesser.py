@@ -1,15 +1,15 @@
 import random
 
-top_of_range = input("Type a number: ")
+top_of_range = input("Tentukan batasan angka yang ingin ditebak: ")
 
 if top_of_range.isdigit():
     top_of_range = int(top_of_range)
 
     if top_of_range <= 0:
-        print("Please type a number larger than 0 next time.")
+        print("Tolong masukan angka positif di atas 0!")
         quit()
 else:
-    print("Please type a  number")
+    print("Tolong masukan angka!")
     quit()
 
 random_number = random.randint(0, top_of_range)
@@ -17,19 +17,19 @@ guesses = 0
 
 while True:
     guesses += 1
-    user_guess = input("Make a guess: ")
+    user_guess = input("Mari kita cek intuisi mu, masukkan tebakan angka mu: ")
     if user_guess.isdigit():
         user_guess = int(user_guess)
     else:
-        print("Please type a  number")
+        print("Tolong masukan angka!")
         continue
 
     if user_guess == random_number:
-        print("You got it!")
+        print("Selamat, kamu benar!")
         break
     elif user_guess > random_number:
-        print("You were above the number!")
+        print("Masih di atas nomor yang benar nih, turunkan tebakanmu..")
     else:
-        print("You were below the number!")
+        print("Kalau ini, di bawah nomor yang benar, naikkan tebakanmu..")
 
-print("You got it in", guesses, "guesses")
+print("Kamu benar dengan", guesses, "tebakan")
