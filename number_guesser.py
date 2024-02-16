@@ -49,7 +49,7 @@ def game():
             guesses += 1
             user_guess = random.randint(0, top_of_range)
             if user_guess == random_number:
-                print("Selamat, kamu benar!")
+                print("Selamat, kamu benar!!")
                 running = False
             elif user_guess > random_number:
                 print("Masih di atas nomor yang benar nih, turunkan tebakanmu..")
