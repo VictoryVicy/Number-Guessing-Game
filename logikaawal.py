@@ -1,35 +1,113 @@
+import pygame
 import random
+import sys
 
-top_of_range = input("Tentukan batasan angka yang ingin ditebak: ")
+# Inisialisasi pygame
+pygame.init()
 
-if top_of_range.isdigit():
-    top_of_range = int(top_of_range)
+# Warna
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GRAY = (200, 200, 200)
 
-    if top_of_range <= 0:
-        print("Tolong masukan angka positif di atas 0!")
-        quit()
-else:
-    print("Tolong masukan angka!")
-    quit()
+# Ukuran layar
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
 
-random_number = random.randint(0, top_of_range)
-guesses = 0
+# Font
+font = pygame.font.Font(None, 36)
+
+# Fungsi untuk menggambar teks di tengah layar
+def draw_text(surface, text, font, color, x, y):
+    text_surface = font.render(text, True, color)
+    text_rect = text_surface.get_rect()
+    text_rect.center = (x, y)
+    surface.blit(text_surface, text_rect)
+
+# Fungsi utama permainan
+def game():
+    # Batasan angka
+    top_of_range = 100
+    random_number = random.randint(0, top_of_range)
+    guesses = 0
+    
+
+    # Loop permainan
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+
+        # Handling input tebakan pengguna
+        key = pygame.key.get_pressed()
+        if key[pygame.K_UP]:
+            guesses += 1
+            user_guess = random.randint(0, top_of_range)
+            if user_guess == random_number:
+                print("Selamat, kamu benar!")
+                running = False
+            elif user_guess > random_number:
+                print("Masih di atas nomor yang benar nih, turunkan tebakanmu..")
+            else:
+                print("Kalau ini, di bawah nomor yang benar, naikkan tebakanmu..")
+        elif key[pygame.K_DOWN]:
+            guesses -= 1
+            user_guess = random.randint(0, top_of_range)
+            if user_guess == random_number:
+                print("Selamat, kamu benar!")
+                running = False
+            elif user_guess > random_number:
+                print("Masih di atas nomor yang benar nih, turunkan tebakanmu..")
+            else:
+                print("Kalau ini, di bawah nomor yang benar, naikkan tebakanmu..")
+
+        # Tampilan permainan
+        screen.fill(WHITE)
+        draw_text(screen, "Tebak Angka", font, BLACK, SCREEN_WIDTH // 2, 50)
+        draw_text(screen, "Tebakan: {}".format(guesses), font, BLACK, SCREEN_WIDTH // 2, 100)
+        draw_text(screen, "Tekan panah atas untuk menebak", font, BLACK, SCREEN_WIDTH // 2, 150)
+        pygame.display.flip()
+
+# Main loop
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption("Permainan Tebak Angka")
+
+# Tombol "Mulai"
+start_button_rect = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 30, 200, 50)
+
+# Tombol "Keluar"
+quit_button_rect = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 50, 200, 50)
 
 while True:
-    guesses += 1
-    user_guess = input("Mari kita cek intuisi mu, masukkan tebakan angka mu: ")
-    if user_guess.isdigit():
-        user_guess = int(user_guess)
-    else:
-        print("Tolong masukan angka!")
-        continue
+    screen.fill(WHITE)
+    draw_text(screen, "Find My Hide Number", font, BLACK, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4)
+    draw_text(screen, "Tekan spasi untuk memulai", font, BLACK, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+    draw_text(screen, "Tekan ESC untuk keluar", font, BLACK, SCREEN_WIDTH // 2, SCREEN_HEIGHT * 3 // 4)
+    pygame.draw.rect(screen, GRAY, start_button_rect)
+    pygame.draw.rect(screen, GRAY, quit_button_rect)
+    draw_text(screen, "Mulai", font, BLACK, start_button_rect.centerx, start_button_rect.centery)
+    draw_text(screen, "Keluar", font, BLACK, quit_button_rect.centerx, quit_button_rect.centery)
+    pygame.display.flip()
 
-    if user_guess == random_number:
-        print("Selamat, kamu benar!")
-        break
-    elif user_guess > random_number:
-        print("Masih di atas nomor yang benar nih, turunkan tebakanmu..")
-    else:
-        print("Kalau ini, di bawah nomor yang benar, naikkan tebakanmu..")
-
-print("Kamu benar dengan", guesses, "tebakan")
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                pygame.quit()
+                sys.exit()
+            elif event.key == pygame.K_SPACE:
+                game()
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:  # Left mouse button
+                if start_button_rect.collidepoint(event.pos):
+                    game()
+                elif quit_button_rect.collidepoint(event.pos):
+                    pygame.quit()
+                    sys.exit()

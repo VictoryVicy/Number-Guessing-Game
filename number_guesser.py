@@ -49,7 +49,7 @@ def game():
             guesses += 1
             user_guess = random.randint(0, top_of_range)
             if user_guess == random_number:
-                print("Selamat, kamu benar!!")
+                print("Selamat, kamu benar!")
                 running = False
             elif user_guess > random_number:
                 print("Masih di atas nomor yang benar nih, turunkan tebakanmu..")
@@ -77,11 +77,21 @@ def game():
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Permainan Tebak Angka")
 
+# Tombol "Mulai"
+start_button_rect = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 30, 200, 50)
+
+# Tombol "Keluar"
+quit_button_rect = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 50, 200, 50)
+
 while True:
     screen.fill(WHITE)
     draw_text(screen, "Find My Hide Number", font, BLACK, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4)
     draw_text(screen, "Tekan spasi untuk memulai", font, BLACK, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
     draw_text(screen, "Tekan ESC untuk keluar", font, BLACK, SCREEN_WIDTH // 2, SCREEN_HEIGHT * 3 // 4)
+    pygame.draw.rect(screen, GRAY, start_button_rect)
+    pygame.draw.rect(screen, GRAY, quit_button_rect)
+    draw_text(screen, "Mulai", font, BLACK, start_button_rect.centerx, start_button_rect.centery)
+    draw_text(screen, "Keluar", font, BLACK, quit_button_rect.centerx, quit_button_rect.centery)
     pygame.display.flip()
 
     for event in pygame.event.get():
@@ -94,3 +104,10 @@ while True:
                 sys.exit()
             elif event.key == pygame.K_SPACE:
                 game()
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:  # Left mouse button
+                if start_button_rect.collidepoint(event.pos):
+                    game()
+                elif quit_button_rect.collidepoint(event.pos):
+                    pygame.quit()
+                    sys.exit()
