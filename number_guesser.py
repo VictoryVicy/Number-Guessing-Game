@@ -86,8 +86,6 @@ quit_button_rect = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 50,
 while True:
     screen.fill(WHITE)
     draw_text(screen, "Find My Hide Number", font, BLACK, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4)
-    draw_text(screen, "Tekan spasi untuk memulai", font, BLACK, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-    draw_text(screen, "Tekan ESC untuk keluar", font, BLACK, SCREEN_WIDTH // 2, SCREEN_HEIGHT * 3 // 4)
     pygame.draw.rect(screen, GRAY, start_button_rect)
     pygame.draw.rect(screen, GRAY, quit_button_rect)
     draw_text(screen, "Mulai", font, BLACK, start_button_rect.centerx, start_button_rect.centery)
@@ -98,12 +96,6 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                pygame.quit()
-                sys.exit()
-            elif event.key == pygame.K_SPACE:
-                game()
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:  # Left mouse button
                 if start_button_rect.collidepoint(event.pos):
