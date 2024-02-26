@@ -31,6 +31,18 @@ def game():
     random_number = random.randint(0, top_of_range)
     guesses = 0
 
+    # Kotak angka tebakan
+    guess_box_rect = pygame.Rect(SCREEN_WIDTH // 2 - 50, SCREEN_HEIGHT // 2 - 50, 100, 100)
+
+    # Tombol +
+    plus_button_rect = pygame.Rect(guess_box_rect.right + 10, guess_box_rect.top, 30, 30)
+
+    # Tombol -
+    minus_button_rect = pygame.Rect(guess_box_rect.right + 10, guess_box_rect.bottom - 30, 30, 30)
+
+    # Tombol Cek
+    check_button_rect = pygame.Rect(guess_box_rect.left, guess_box_rect.bottom + 10, 100, 50)
+
     # Loop permainan
     running = True
     while running:
@@ -57,9 +69,8 @@ def game():
 
         # Tampilan permainan
         screen.fill(WHITE)
-        draw_text(screen, "Tebak Angka", font, BLACK, SCREEN_WIDTH // 2, 50)
-        draw_text(screen, "Tebakan: {}".format(guesses), font, BLACK, SCREEN_WIDTH // 2, 100)
-        draw_text(screen, "Tekan panah atas untuk menebak", font, BLACK, SCREEN_WIDTH // 2, 150)
+        pygame.draw.rect(screen, GRAY, guess_box_rect)
+        draw_text(screen, str(guesses), font, BLACK, guess_box_rect.centerx, guess_box_rect.centery)
         pygame.draw.rect(screen, GRAY, plus_button_rect)
         pygame.draw.rect(screen, GRAY, minus_button_rect)
         pygame.draw.rect(screen, GRAY, check_button_rect)
@@ -77,15 +88,6 @@ start_button_rect = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 30
 
 # Tombol "Keluar"
 quit_button_rect = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 50, 200, 50)
-
-# Tombol +
-plus_button_rect = pygame.Rect(SCREEN_WIDTH // 2 - 70, SCREEN_HEIGHT // 2 + 100, 50, 50)
-
-# Tombol -
-minus_button_rect = pygame.Rect(SCREEN_WIDTH // 2 + 20, SCREEN_HEIGHT // 2 + 100, 50, 50)
-
-# Tombol Cek
-check_button_rect = pygame.Rect(SCREEN_WIDTH // 2 - 25, SCREEN_HEIGHT // 2 + 180, 100, 50)
 
 while True:
     screen.fill(WHITE)
