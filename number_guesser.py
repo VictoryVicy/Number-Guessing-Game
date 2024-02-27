@@ -50,14 +50,12 @@ def game():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if plus_button_rect.collidepoint(event.pos):
                     guesses += 1
                 elif minus_button_rect.collidepoint(event.pos):
-                    guesses -= 1
+                    if guesses > 0:
+                        guesses -= 1
                 elif check_button_rect.collidepoint(event.pos):
                     if guesses == random_number:
                         print("Selamat, kamu benar!")
