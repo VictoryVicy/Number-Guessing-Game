@@ -30,6 +30,7 @@ def game():
     top_of_range = 100
     random_number = random.randint(0, top_of_range)
     guesses = 0
+    found_answer = False  # Variabel untuk menandai apakah jawaban sudah ditemukan atau tidak
 
     # Kotak angka tebakan
     guess_box_rect = pygame.Rect(SCREEN_WIDTH // 2 - 50, SCREEN_HEIGHT // 2 - 50, 100, 100)
@@ -52,18 +53,19 @@ def game():
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if plus_button_rect.collidepoint(event.pos):
-                    guesses += 1
+                    if guesses < top_of_range:
+                        guesses += 1
                 elif minus_button_rect.collidepoint(event.pos):
                     if guesses > 0:
                         guesses -= 1
                 elif check_button_rect.collidepoint(event.pos):
                     if guesses == random_number:
-                        print("Selamat, kamu benar!")
-                        running = False
+                        found_answer = True  # Setel variabel menjadi True ketika jawaban ditemukan
                     elif guesses > random_number:
-                        print("Masih di atas nomor yang benar nih, turunkan tebakanmu..")
+                        found_answer = False
                     else:
-                        print("Kalau ini, di bawah nomor yang benar, naikkan tebakanmu..")
+                        found_answer = False
+                        draw_text(screen, "Kalau ini, di bawah nomor yang benar, naikkan tebakanmu..", font, BLACK, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 100)
 
         # Tampilan permainan
         screen.fill(WHITE)
@@ -75,6 +77,13 @@ def game():
         draw_text(screen, "+", font, BLACK, plus_button_rect.centerx, plus_button_rect.centery)
         draw_text(screen, "-", font, BLACK, minus_button_rect.centerx, minus_button_rect.centery)
         draw_text(screen, "Cek", font, BLACK, check_button_rect.centerx, check_button_rect.centery)
+
+        # Jika jawaban ditemukan, gambar pesan di layar
+        if found_answer:
+            draw_text(screen, "Selamat, kamu benar!", font, BLACK, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 150)
+        elif guesses != random_number:
+            draw_text(screen, "Coba tebak lagi!", font, BLACK, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 150)
+
         pygame.display.flip()
 
 # Main loop
