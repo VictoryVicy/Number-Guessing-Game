@@ -82,17 +82,23 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Permainan Tebak Angka")
 
 # Tombol "Mulai"
-start_button_rect = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 30, 200, 50)
+start_button_rect = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 80, 200, 50)
+
+# Tombol "Cara bermain"
+setting_button_rect = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 10, 200, 50)
 
 # Tombol "Keluar"
-quit_button_rect = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 50, 200, 50)
+quit_button_rect = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 100, 200, 50)
 
 while True:
     screen.fill(WHITE)
-    draw_text(screen, "Find My Hide Number", font, BLACK, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4)
+    draw_text(screen, "Bom Angka", font, BLACK, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4)
+    draw_text(screen, "Meledak atau tidak ya?", font, BLACK, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4 + 30)
     pygame.draw.rect(screen, GRAY, start_button_rect)
+    pygame.draw.rect(screen, GRAY, setting_button_rect)
     pygame.draw.rect(screen, GRAY, quit_button_rect)
     draw_text(screen, "Mulai", font, BLACK, start_button_rect.centerx, start_button_rect.centery)
+    draw_text(screen, "Cara bermain", font, BLACK, setting_button_rect.centerx, setting_button_rect.centery)
     draw_text(screen, "Keluar", font, BLACK, quit_button_rect.centerx, quit_button_rect.centery)
     pygame.display.flip()
 
